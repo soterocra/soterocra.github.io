@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build (transpile JSX → JS)
+      - name: Build (transpile JSX to JS)
         run: npm run build
 
       - name: Push built files to deploy-preview branch
@@ -44,21 +44,13 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           EXISTING=$(gh pr list --base main --head deploy-preview --json number --jq '.[0].number' 2>/dev/null || true)
-
           if [ -z "$EXISTING" ]; then
+            PR_BODY="Automated deploy PR — gerado pelo workflow de build do branch \`setup\`.\n\n- JSX transpilado via Babel (sem Babel standalone no browser)\n- Assets copiados: \`components/\`, \`assets/\`, \`fonts/\`, \`colors_and_type.css\`, \`CNAME\`\n\n**Merge para fazer o deploy no GitHub Pages.**"
             gh pr create \
               --title "deploy: transpiled build from setup" \
-              --body "$(cat <<'BODY'
-Automated deploy PR — gerado pelo workflow de build do branch \`setup\`.
-
-- JSX transpilado via Babel (sem Babel standalone no browser)
-- Assets copiados: \`components/\`, \`assets/\`, \`fonts/\`, \`colors_and_type.css\`, \`CNAME\`
-
-**Merge para fazer o deploy no GitHub Pages.**
-BODY
-)" \
+              --body "$PR_BODY" \
               --base main \
               --head deploy-preview
           else
-            echo "PR #$EXISTING já existe — build atualizado."
+            echo "PR #$EXISTING ja existe - build atualizado."
           fi
