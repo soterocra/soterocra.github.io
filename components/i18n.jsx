@@ -12,7 +12,7 @@ const I18N = {
     // Hero
     'hero.available': 'Disponível para conversas',
     'hero.bio': 'Staff Engineer no Itaú Unibanco. AWS Certified Professional, com 12 anos construindo sistemas em **Java**, **Go** e **Python**. Escrevo sobre AWS, arquitetura, IA e o que aprendo quando o deploy aperta.',
-    'hero.joke': 'vibe coder com experiência real de desenvolvimento de software.',
+    'hero.joke': 'developer/arquiteto experiente, vibe coder nas horas vagas.',
     'hero.based': 'Baseado em',
     'hero.focus': 'Foco',
     'hero.langs': 'Idiomas',
@@ -68,7 +68,7 @@ const I18N = {
 
     'hero.available': 'Open to conversations',
     'hero.bio': 'Staff Engineer at Itaú Unibanco. AWS Certified Professional, with 12 years building systems in **Java**, **Go** and **Python**. I write about AWS, architecture, AI, and what I learn when deploys get tight.',
-    'hero.joke': 'vibe coder with real software-engineering experience.',
+    'hero.joke': 'experienced developer/architect, vibe coder in my spare time.',
     'hero.based': 'Based in',
     'hero.focus': 'Focus',
     'hero.langs': 'Languages',

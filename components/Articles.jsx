@@ -1,60 +1,70 @@
 // Published articles list — external links to Itaú/DevSuperior/Medium/etc.
+// Sorted desc by publication date.
 const ARTICLES = [
   {
-    title: 'Feature Toggles no Itaú: agilidade e governança na implementação de novas features',
-    platform: 'Itaú Tech (Medium)',
-    platformShort: 'itau',
-    date: '2024',
-    readMin: 9,
-    href: 'https://medium.com/itautech/feature-toggles-no-ita%C3%BA-agilidade-e-governan%C3%A7a-na-implementa%C3%A7%C3%A3o-de-novas-features-d9265c5b0dfe',
-    tags: ['Arquitetura', 'Governança'],
-  },
-  {
-    title: 'ChatGPT, Copilot e Claude: como desenvolvedores estão programando em 2026',
+    title: 'Desacoplando sistemas com mensageria no AWS SQS',
     platform: 'DevSuperior',
     platformShort: 'devsuperior',
-    date: '2026',
-    readMin: 7,
-    href: 'https://devsuperior.com.br/blog/chatgpt-copilot-e-claude-como-desenvolvedores-estao-programando-em-2026',
-    tags: ['IA', 'Produtividade'],
+    date: '2026-04-16',
+    readMin: 14,
+    href: 'https://devsuperior.com.br/blog/desacoplando-sistemas-com-mensageria-no-aws-sqs',
+    tags: ['AWS', 'Mensageria'],
   },
   {
     title: 'Deploy de aplicações na AWS com ECS Fargate',
     platform: 'DevSuperior',
     platformShort: 'devsuperior',
-    date: '2025',
-    readMin: 11,
+    date: '2026-04-06',
+    readMin: 12,
     href: 'https://devsuperior.com.br/blog/deploy-de-aplicacoes-na-aws-com-ecs-fargate',
     tags: ['AWS', 'DevOps'],
-  },
-  {
-    title: 'Desacoplando sistemas com mensageria no AWS SQS',
-    platform: 'DevSuperior',
-    platformShort: 'devsuperior',
-    date: '2025',
-    readMin: 8,
-    href: 'https://devsuperior.com.br/blog/desacoplando-sistemas-com-mensageria-no-aws-sqs',
-    tags: ['AWS', 'Mensageria'],
-  },
-  {
-    title: 'Spring Batch em ação: processamento de grandes lotes de dados',
-    platform: 'DevSuperior',
-    platformShort: 'devsuperior',
-    date: '2024',
-    readMin: 10,
-    href: 'https://devsuperior.com.br/blog/spring-batch-em-acao-processamento-de-grandes-lotes-de-dados',
-    tags: ['Java', 'Spring'],
   },
   {
     title: 'Use Redis para reduzir a latência de APIs REST',
     platform: 'DevSuperior',
     platformShort: 'devsuperior',
-    date: '2024',
-    readMin: 6,
+    date: '2026-03-20',
+    readMin: 12,
     href: 'https://devsuperior.com.br/blog/use-redis-para-reduzir-a-latencia-de-apis-rest',
     tags: ['Performance', 'Cache'],
   },
+  {
+    title: 'ChatGPT, Copilot e Claude: como desenvolvedores estão programando em 2026',
+    platform: 'DevSuperior',
+    platformShort: 'devsuperior',
+    date: '2026-03-10',
+    readMin: 12,
+    href: 'https://devsuperior.com.br/blog/chatgpt-copilot-e-claude-como-desenvolvedores-estao-programando-em-2026',
+    tags: ['IA', 'Produtividade'],
+  },
+  {
+    title: 'Spring Batch em ação: processamento de grandes lotes de dados',
+    platform: 'DevSuperior',
+    platformShort: 'devsuperior',
+    date: '2026-02-14',
+    readMin: 13,
+    href: 'https://devsuperior.com.br/blog/spring-batch-em-acao-processamento-de-grandes-lotes-de-dados',
+    tags: ['Java', 'Spring'],
+  },
+  {
+    title: 'Feature Toggles no Itaú: agilidade e governança na implementação de novas features',
+    platform: 'Itaú Tech (Medium)',
+    platformShort: 'itau',
+    date: '2025-11-17',
+    readMin: 8,
+    href: 'https://medium.com/itautech/feature-toggles-no-ita%C3%BA-agilidade-e-governan%C3%A7a-na-implementa%C3%A7%C3%A3o-de-novas-features-d9265c5b0dfe',
+    tags: ['Arquitetura', 'Governança'],
+  },
 ];
+
+// Format ISO date "YYYY-MM-DD" into "MMM YYYY" (e.g. "Apr 2026").
+const MONTHS_PT = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+function formatArticleDate(iso) {
+  const m = /^(\d{4})-(\d{2})/.exec(iso);
+  if (!m) return iso;
+  const [, y, mo] = m;
+  return `${MONTHS_PT[parseInt(mo, 10) - 1]} ${y}`;
+}
 
 const PLATFORM_STYLES = {
   itau:        { bg: '#EC7000', fg: '#fff', label: 'IT' },
@@ -108,7 +118,7 @@ function Articles() {
                className="article-row"
                style={{
                  display: 'grid',
-                 gridTemplateColumns: '64px 1fr 220px 80px 28px',
+                 gridTemplateColumns: '88px 1fr 220px 80px 28px',
                  alignItems: 'center', gap: 24,
                  padding: '22px 4px',
                  textDecoration: 'none', color: 'inherit',
@@ -116,7 +126,7 @@ function Articles() {
               <span style={{
                 fontFamily: 'var(--font-mono)', fontSize: 12,
                 color: 'var(--fg-3)', fontVariantNumeric: 'tabular-nums',
-              }}>{a.date}</span>
+              }}>{formatArticleDate(a.date)}</span>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <h3 style={{
                   fontFamily: 'var(--font-mono)', fontWeight: 600, fontSize: 17,

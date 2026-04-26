@@ -2,11 +2,11 @@
 const CONTRIBUTIONS = [
   {
     kind: 'video',
-    title: 'AWS Step Functions na prática',
-    where: 'YouTube',
+    title: 'Extraindo o Poder do WebFlux',
+    where: 'YouTube · UaiJUG',
     year: '2024',
     href: 'https://www.youtube.com/watch?v=Go5w9zA8eD4',
-    detail: 'Vídeo · ~22 min',
+    detail: 'Talk · Java reativo',
   },
   {
     kind: 'oss',
