@@ -82,10 +82,10 @@ function Projects() {
         title={t('projects.title')}
         kicker={t('projects.kicker')}
         action={
-          <a href="#" style={{
+          <a href="https://github.com/soterocra" target="_blank" rel="noopener noreferrer" style={{
             fontFamily: 'var(--font-mono)', fontSize: 13,
             color: 'var(--accent)', textDecoration: 'none',
-          }}>github.com/sotero ↗</a>
+          }}>github.com/soterocra ↗</a>
         }
       />
       <div className="project-grid" style={{

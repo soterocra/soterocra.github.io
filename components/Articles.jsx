@@ -1,6 +1,15 @@
 // Published articles list — external links to Itaú/DevSuperior/Medium/etc.
-// Sorted desc by publication date.
+// Itaú article pinned to top, rest sorted desc by publication date.
 const ARTICLES = [
+  {
+    title: 'Feature Toggles no Itaú: agilidade e governança na implementação de novas features',
+    platform: 'Itaú Tech (Medium)',
+    platformShort: 'itau',
+    date: '2025-11-17',
+    readMin: 8,
+    href: 'https://medium.com/itautech/feature-toggles-no-ita%C3%BA-agilidade-e-governan%C3%A7a-na-implementa%C3%A7%C3%A3o-de-novas-features-d9265c5b0dfe',
+    tags: ['Arquitetura', 'Governança'],
+  },
   {
     title: 'Desacoplando sistemas com mensageria no AWS SQS',
     platform: 'DevSuperior',
@@ -45,15 +54,6 @@ const ARTICLES = [
     readMin: 13,
     href: 'https://devsuperior.com.br/blog/spring-batch-em-acao-processamento-de-grandes-lotes-de-dados',
     tags: ['Java', 'Spring'],
-  },
-  {
-    title: 'Feature Toggles no Itaú: agilidade e governança na implementação de novas features',
-    platform: 'Itaú Tech (Medium)',
-    platformShort: 'itau',
-    date: '2025-11-17',
-    readMin: 8,
-    href: 'https://medium.com/itautech/feature-toggles-no-ita%C3%BA-agilidade-e-governan%C3%A7a-na-implementa%C3%A7%C3%A3o-de-novas-features-d9265c5b0dfe',
-    tags: ['Arquitetura', 'Governança'],
   },
 ];
 
