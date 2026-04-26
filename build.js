@@ -57,4 +57,16 @@ if (fs.existsSync(path.join(ROOT, 'CNAME'))) {
   console.log('  ✓ CNAME');
 }
 
+// Ship the Pages deploy workflow so it lives on main and triggers when
+// a deploy PR is merged. Without this, main would have no workflow and
+// GitHub would fall back to the legacy Pages build (which uses old
+// action versions and emits Node.js deprecation warnings).
+const PAGES_WF_REL = '.github/workflows/pages-deploy.yml';
+const pagesWfSrc = path.join(ROOT, PAGES_WF_REL);
+if (fs.existsSync(pagesWfSrc)) {
+  fs.mkdirSync(path.join(DIST, '.github', 'workflows'), { recursive: true });
+  fs.copyFileSync(pagesWfSrc, path.join(DIST, PAGES_WF_REL));
+  console.log(`  ✓ ${PAGES_WF_REL}`);
+}
+
 console.log('\nBuild complete → dist/');
