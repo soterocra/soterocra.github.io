@@ -85,14 +85,16 @@ function Projects() {
     title: t('projects.title'),
     kicker: t('projects.kicker'),
     action: /*#__PURE__*/React.createElement("a", {
-      href: "#",
+      href: "https://github.com/soterocra",
+      target: "_blank",
+      rel: "noopener noreferrer",
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: 13,
         color: 'var(--accent)',
         textDecoration: 'none'
       }
-    }, "github.com/sotero \u2197")
+    }, "github.com/soterocra \u2197")
   }), /*#__PURE__*/React.createElement("div", {
     className: "project-grid",
     style: {
