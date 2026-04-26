@@ -37,16 +37,24 @@ jobs:
 
           COMMIT_SHA=$(git rev-parse --short HEAD)
 
-          # Save built files before switching branches
-          cp -r dist /tmp/dist
+          # Move (not copy) dist out of the worktree so it doesn't leak in as
+          # both /dist and root files when we cp it back later.
+          rm -rf /tmp/deploy-dist
+          mv dist /tmp/deploy-dist
 
-          # Create/reset deploy-preview from main so the PR can be created
+          # Create/reset deploy-preview from main so the PR shares history.
           git fetch origin main
           git checkout -B deploy-preview origin/main
-          git rm -rf . --quiet
 
-          # Copy built files to root
-          cp -r /tmp/dist/. .
+          # Wipe everything: tracked files via git rm, plus untracked junk
+          # (node_modules from npm ci, leftover ignored files) via git clean.
+          # Without `git clean -fdx`, node_modules ends up committed because
+          # the .gitignore from setup is gone after checking out main.
+          git rm -rf . --quiet
+          git clean -fdx
+
+          # Copy ONLY the built artifacts to the worktree root.
+          cp -r /tmp/deploy-dist/. .
 
           git add -A
           if git diff --staged --quiet; then
