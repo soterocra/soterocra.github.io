@@ -31,13 +31,30 @@ jobs:
         run: npm run build
 
       - name: Push built files to deploy-preview branch
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: deploy-preview
-          folder: dist
-          commit-message: "build: transpile from setup @ ${{ github.sha }}"
-          force: true
-          clean: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          COMMIT_SHA=$(git rev-parse --short HEAD)
+
+          # Save built files before switching branches
+          cp -r dist /tmp/dist
+
+          # Create/reset deploy-preview from main so the PR can be created
+          git fetch origin main
+          git checkout -B deploy-preview origin/main
+          git rm -rf . --quiet
+
+          # Copy built files to root
+          cp -r /tmp/dist/. .
+
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to deploy"
+          else
+            git commit -m "build: transpile from setup @ $COMMIT_SHA"
+            git push origin deploy-preview --force
+          fi
 
       - name: Create or update PR to main
         env:
