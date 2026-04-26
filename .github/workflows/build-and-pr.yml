@@ -1,0 +1,64 @@
+name: Build & Open Deploy PR
+
+on:
+  push:
+    branches:
+      - setup
+
+jobs:
+  build-and-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout setup branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (transpile JSX → JS)
+        run: npm run build
+
+      - name: Push built files to deploy-preview branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: deploy-preview
+          folder: dist
+          commit-message: "build: transpile from setup @ ${{ github.sha }}"
+          force: true
+          clean: true
+
+      - name: Create or update PR to main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          EXISTING=$(gh pr list --base main --head deploy-preview --json number --jq '.[0].number' 2>/dev/null || true)
+
+          if [ -z "$EXISTING" ]; then
+            gh pr create \
+              --title "deploy: transpiled build from setup" \
+              --body "$(cat <<'BODY'
+Automated deploy PR — gerado pelo workflow de build do branch \`setup\`.
+
+- JSX transpilado via Babel (sem Babel standalone no browser)
+- Assets copiados: \`components/\`, \`assets/\`, \`fonts/\`, \`colors_and_type.css\`, \`CNAME\`
+
+**Merge para fazer o deploy no GitHub Pages.**
+BODY
+)" \
+              --base main \
+              --head deploy-preview
+          else
+            echo "PR #$EXISTING já existe — build atualizado."
+          fi
