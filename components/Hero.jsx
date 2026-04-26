@@ -40,7 +40,7 @@ function Hero() {
           color: 'var(--fg-3)', margin: 0, maxWidth: 580,
           fontStyle: 'italic',
         }}>
-          <span style={{ fontStyle: 'normal' }}>🦄</span> &nbsp;{t('hero.joke')}
+          <span style={{ fontStyle: 'normal' }}>🤖</span> &nbsp;{t('hero.joke')}
         </p>
         <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', marginTop: 6 }}>
           <FactPill label={t('hero.based')} value="Uberlândia, BR" />
